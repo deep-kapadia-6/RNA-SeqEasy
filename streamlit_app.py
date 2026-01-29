@@ -9,7 +9,7 @@ from app.config import (
 )
 
 st.set_page_config(
-    page_title="RNA Workflow Manager",
+    page_title="RNA-SeqEasy",
     page_icon="🧬",
     layout="wide",
     initial_sidebar_state="expanded",
