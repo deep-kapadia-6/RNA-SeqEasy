@@ -22,7 +22,7 @@ if "uploaded_files" not in st.session_state:
 if "workflow_status" not in st.session_state:
     st.session_state.workflow_status = "not_started"
 
-st.title("🧬 RNA Workflow Manager")
+st.title("🧬 RNA-SeqEasy")
 st.subheader("By Deep Kapadia")
 
 with st.sidebar:
