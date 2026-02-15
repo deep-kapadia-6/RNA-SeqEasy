@@ -1,407 +1,333 @@
-# RNA-SeqEasy (RNA Sequencing Workflow Web App)
+# RNA-SeqEasy 🧬
 
-[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
-[![Streamlit](https://img.shields.io/badge/Streamlit-1.28+-red.svg)](https://streamlit.io/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-green.svg)](https://fastapi.tiangolo.com/)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Streamlit App](https://img.shields.io/badge/Streamlit-Live_Demo-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://rnaseqeasy.streamlit.app/)
+![Python](https://img.shields.io/badge/python-3.8+-blue.svg)
+![Streamlit](https://img.shields.io/badge/Streamlit-1.28+-FF4B4B.svg)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-009688.svg)
+![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
 
-A Python web application for automating RNA sequencing workflow management...
+**[🚀 Try the Live Demo →](https://rnaseqeasy.streamlit.app/)**
 
 A Python web application for automating RNA sequencing workflow management with interactive parameter collection, automated processing, and AI-powered chatbot support.
 
-# RNA Sequencing Workflow Web App
+---
 
-A comprehensive Python web application for managing and automating single-cell RNA sequencing (scRNA-seq) analysis workflows. This tool provides an intuitive Streamlit-based interface for parameter configuration, automated processing using Scanpy, and AI-powered assistance for workflow guidance.
+## 🚀 Quick Start
 
-## Key Features
+### Try it Online (No Installation Required)
 
-- 🎯 **Interactive Configuration**: Streamlit UI for easy parameter collection and workflow setup
-- 🔬 **Quality Control**: Configurable QC thresholds with real-time validation
-- 📊 **Automated Processing**: Complete Scanpy-based pipeline (normalization, clustering, analysis)
+**[Launch RNA-SeqEasy Web App →](https://rnaseqeasy.streamlit.app/)**
+
+The easiest way to try RNA-SeqEasy is through our hosted Streamlit app:
+
+1. Visit **https://rnaseqeasy.streamlit.app/**
+2. Navigate through the sidebar pages:
+   - **Home**: Overview and getting started
+   - **Configure Workflow**: Set up analysis parameters
+   - **Run Workflow**: Execute your scRNA-seq pipeline
+   - **View Results**: Visualize outputs
+   - **Help**: AI chatbot for guidance
+3. Upload your data or use example datasets
+4. Configure parameters and run your analysis
+
+> **Note**: The hosted version runs in Streamlit Cloud. For production workloads or large datasets, we recommend local deployment (see Installation below).
+
+---
+
+## 💻 Installation
+
+### Option 1: Local Development Setup
+
+#### Prerequisites
+
+- Python 3.8+
+- pip or conda package manager
+- (Optional) Docker for containerized deployment
+
+#### Clone and Install
+
+```bash
+git clone https://github.com/deep-kapadia-6/RNA-SeqEasy.git
+cd RNA-SeqEasy
+pip install -r requirements.txt
+```
+
+#### Configure Environment Variables
+
+Create a `.env` file in the project root:
+
+```bash
+# LLM API Keys (choose at least one)
+OPENAI_API_KEY=your_openai_api_key_here
+ANTHROPIC_API_KEY=your_anthropic_key_here
+HUGGINGFACE_API_KEY=your_huggingface_key_here
+
+# Default provider
+DEFAULT_LLM_PROVIDER=openai
+
+# Backend URL (for local development)
+BACKEND_URL=http://127.0.0.1:8000
+```
+
+#### Run the Application
+
+```bash
+# Start the Streamlit frontend
+streamlit run streamlit_app.py
+```
+
+Visit **http://localhost:8501** in your browser.
+
+#### (Optional) Run FastAPI Backend
+
+For full workflow automation:
+
+```bash
+# In a separate terminal
+cd app
+uvicorn main:app --reload
+```
+
+### Option 2: Deploy to Streamlit Community Cloud
+
+1. Fork this repository to your GitHub account
+2. Go to https://share.streamlit.io/
+3. Click "New app" and connect your forked repo
+4. Set these secrets in Streamlit Cloud settings:
+   - `OPENAI_API_KEY` (or other LLM provider keys)
+   - `DEFAULT_LLM_PROVIDER`
+5. Deploy!
+
+Your app will be live at `https://your-app-name.streamlit.app/`
+
+---
+
+## 💡 Overview
+
+RNA-SeqEasy is a comprehensive Python web application for managing and automating single-cell RNA sequencing (scRNA-seq) analysis workflows. This tool provides an intuitive Streamlit-based interface for parameter configuration, automated processing using Scanpy, and AI-powered assistance for workflow guidance.
+
+---
+
+## ✨ Key Features
+
+- 🔧 **Interactive Configuration**: Streamlit UI for easy parameter collection and workflow setup
+- ✅ **Quality Control**: Configurable QC thresholds with real-time validation
+- 📦 **Automated Processing**: Complete Scanpy-based pipeline (normalization, clustering, analysis)
 - 🤖 **AI Assistant**: Vendor-agnostic LLM integration for parameter explanations and troubleshooting
-- 💾 **Reproducibility**: YAML-based configuration files for sharing and version control
-- 🚀 **REST API**: FastAPI backend for programmatic access and integration
+- 📝 **Reproducibility**: YAML-based configuration files for sharing and version control
+- 🔌 **REST API**: FastAPI backend for programmatic access and integration
 
-## Technology Stack
+---
 
-- **Frontend**: Streamlit
-- **Backend**: FastAPI
-- **Analysis**: Scanpy, Pandas, NumPy
-- **Visualization**: Matplotlib, Seaborn
-- **LLM Integration**: OpenAI, Anthropic, HuggingFace (vendor-agnostic)
-- **Configuration**: Pydantic, PyYAML
+## 📚 Table of Contents
 
-## Use Cases
+- [Quick Start](#-quick-start)
+- [Installation](#-installation)
+- [Features](#-key-features)
+- [Usage](#-usage)
+- [Configuration](#-configuration)
+- [API Documentation](#-api-documentation)
+- [Troubleshooting](#-troubleshooting)
+- [FAQ](#-faq)
+- [Project Structure](#-project-structure)
+- [Requirements](#-requirements)
+- [Contributing](#-contributing--feedback)
+- [License](#-license)
+- [Contact](#-contact)
 
-- Single-cell RNA-seq data analysis
-- Workflow standardization across research teams
-- Educational tool for learning scRNA-seq analysis
-- Automated pipeline execution with reproducible configurations
+---
 
-## Table of Contents
+## 💻 Usage
 
-- [Setup](#setup)
-- [Usage](#usage)
-- [Configuration](#configuration)
-- [API Documentation](#api-documentation)
-- [Troubleshooting](#troubleshooting)
-- [FAQ](#faq)
-- [Project Structure](#project-structure)
-- [Requirements](#requirements)
+### Web Interface (Streamlit)
 
-## Setup
+1. **Home Page**: Overview of the application and workflow steps
+2. **Configure Workflow**: Input parameters for your scRNA-seq analysis
+   - Upload 10x Genomics data (barcodes, features, matrix)
+   - Set QC thresholds (min genes, max mitochondrial %)
+   - Configure normalization and clustering parameters
+3. **Run Workflow**: Execute the automated Scanpy pipeline
+4. **View Results**: Visualize UMAP plots, cluster statistics, and QC metrics
+5. **Help**: Chat with the AI assistant for parameter guidance
 
-### Prerequisites
+### Programmatic Access (API)
 
-- Python 3.8 or higher
-- pip (Python package manager)
-- Virtual environment (recommended)
+For automated pipelines or integration:
 
-### Installation Steps
+```python
+import requests
 
-1. **Clone or download the repository**
+# Submit configuration
+config = {
+    "min_genes": 200,
+    "max_mito_pct": 40,
+    "n_top_genes": 2000
+}
+response = requests.post("http://localhost:8000/config", json=config)
 
-2. **Create virtual environment**:
-   python -m venv env
+# Run workflow
+response = requests.post("http://localhost:8000/workflow/run")
+```
 
-3. **Activate virtual environment**:
-   
-   **Windows PowerShell:**
-   
-   .\env\Scripts\Activate.ps1
-      
-   **Windows Command Prompt:**
- 
-   .\env\Scripts\activate.bat
-      **Linux/Mac:**
-   source env/bin/activate
+---
 
-4. **Install dependencies**:h
-   pip install --upgrade pip
-   pip install -r requirements.txt
+## ⚙️ Configuration
 
-5. **Configure environment variables**:
-   - Copy `.env.example` to `.env` (or create manually)
-   - Set your LLM provider API key:
-      OPENAI_API_KEY=your_openai_key_here
-      DEFAULT_LLM_PROVIDER=openai
-   - Or use Anthropic:
-      ANTHROPIC_API_KEY=your_anthropic_key_here
-      DEFAULT_LLM_PROVIDER=anthropic
-   - Or use HuggingFace:
-      HUGGINGFACE_API_KEY=your_huggingface_key_here
-      DEFAULT_LLM_PROVIDER=huggingface
+### Key Parameters
 
-6. **Create necessary directories**:
-   mkdir configs outputs temp_uploads
+**Quality Control:**
+- `min_genes`: Minimum genes per cell (default: 200)
+- `min_cells`: Minimum cells per gene (default: 3)
+- `max_mito_pct`: Maximum mitochondrial % (default: 40)
 
-### Running the Application
+**Normalization:**
+- `target_sum`: Counts per cell after normalization (default: 1e4)
+- `n_top_genes`: Number of highly variable genes (default: 2000)
 
-1. **Start the Streamlit app**:
-   streamlit run streamlit_app.py   The app will open in your browser at `http://localhost:8501`
+**Clustering:**
+- `n_neighbors`: Number of neighbors for kNN graph (default: 10)
+- `n_pcs`: Number of principal components (default: 40)
+- `resolution`: Leiden clustering resolution (default: 0.5)
 
-2. **Start the FastAPI backend** (optional, for API access):
-   uvicorn app.main:app --reload   The API will be available at `http://127.0.0.1:8000`
-   - API documentation: `http://127.0.0.1:8000/docs`
-   - Alternative docs: `http://127.0.0.1:8000/redoc`
+### AI Assistant Configuration
 
-## Usage
+Supported LLM providers:
+- **OpenAI**: GPT-4, GPT-3.5-turbo
+- **Anthropic**: Claude 3 (Opus, Sonnet, Haiku)
+- **Hugging Face**: Open-source models
 
-### Step-by-Step Workflow
+Set via environment variables or Streamlit secrets.
 
-1. **Start the app**: Run `streamlit run streamlit_app.py`
+---
 
-2. **Upload data**: 
-   - Navigate to "📁 Input & Config" page
-   - Upload your `.h5ad` file (required)
-   - Optionally upload metadata CSV/TSV file
-   - Set output directory
-   - Click "Create Configuration"
+## 📝 API Documentation
 
-3. **Configure Quality Control**:
-   - Go to "🔬 Quality Control" page
-   - Adjust QC thresholds:
-     - Min genes per cell (default: 200)
-     - Max mitochondrial fraction (default: 0.1)
-     - Min UMI count (default: 500)
-   - Click "Update QC Parameters"
-   - Use the help section (📚) for detailed explanations
+### Endpoints
 
-4. **Select Normalization**:
-   - Go to "📊 Normalization" page
-   - Choose normalization method (default: Log normalization)
-   - Click "Update Normalization"
+#### `POST /config`
+Submit workflow configuration.
 
-5. **Set Clustering Parameters**:
-   - Go to "🔍 Clustering" page
-   - Configure:
-     - Number of highly variable genes (default: 2000)
-     - Clustering resolution (default: 0.6)
-     - Number of principal components (default: 30)
-   - Click "Update Clustering Parameters"
+**Request:**
+```json
+{
+  "min_genes": 200,
+  "max_mito_pct": 40,
+  "n_top_genes": 2000
+}
+```
 
-6. **Choose Analysis Options**:
-   - Go to "📈 Analysis" page
-   - Select which analyses to perform:
-     - PCA (recommended)
-     - UMAP (recommended)
-     - t-SNE (optional)
-     - Differential Expression (optional)
-     - Pathway Enrichment (future)
+**Response:**
+```json
+{
+  "status": "success",
+  "config_id": "abc123"
+}
+```
 
-7. **Save Configuration** (recommended):
-   - Go to "💾 Save/Load Config" page
-   - Enter a descriptive name
-   - Click "Save Config"
-   - This allows you to reload settings later
+#### `POST /workflow/run`
+Execute the scRNA-seq analysis workflow.
 
-8. **Run Workflow**:
-   - Go to "🚀 Run Workflow" page
-   - Ensure FastAPI backend is running
-   - Click "Run Workflow"
-   - Wait for completion (may take several minutes for large datasets)
+#### `GET /results/{workflow_id}`
+Retrieve analysis results and plots.
 
-9. **View Results**:
-   - Check the summary metrics (cell/gene counts)
-   - Review QC summary
-   - Download intermediate/final .h5ad files
+Full API docs available at `/docs` when running the FastAPI server.
 
-10. **Chat with AI Assistant**:
-    - Available at the bottom of every page
-    - Ask questions about parameters, workflow steps, or troubleshooting
-    - Get context-aware responses based on your current configuration
+---
 
-### Using Example Configurations
-
-Example configurations are available in the `configs/` directory:
-- `example_basic.yaml`: Standard settings for most datasets
-- `example_strict_qc.yaml`: Stricter QC thresholds for high-quality data
-- `example_full_analysis.yaml`: All analysis options enabled
-
-Load them from the "💾 Save/Load Config" page.
-
-## Configuration
-
-### Configuration Files
-
-The app uses YAML configuration files stored in the `configs/` directory. You can:
-- Save configurations from the UI
-- Load previously saved configurations
-- Modify configs manually and reload them
-- Share configs with collaborators
-
-### Configuration Structure
-tech_stack:
-  stack: "Python (h5ad)"
-input:
-  input_file: "path/to/data.h5ad"
-  metadata_file: "path/to/metadata.csv"  # optional
-output:
-  output_dir: "outputs/"
-qc:
-  min_genes_per_cell: 200
-  max_mitochondrial_fraction: 0.1
-  min_umi_count: 500
-normalization:
-  method: "Log normalization"
-clustering:
-  n_highly_variable_genes: 2000
-  clustering_algorithm: "Leiden"
-  clustering_resolution: 0.6
-  n_principal_components: 30
-analysis:
-  perform_pca: true
-  perform_umap: true
-  perform_tsne: false
-  perform_differential_expression: false
-  perform_pathway_enrichment: false
-  
-## API Documentation
-
-### FastAPI Endpoints
-
-The FastAPI backend provides REST API endpoints:
-
-#### Health Check
-- **GET** `/health`
-- Returns API status
-
-#### Configuration Management
-- **POST** `/config` - Set current configuration
-- **GET** `/config` - Get current configuration
-- **POST** `/config/save?name={name}` - Save configuration to file
-- **POST** `/config/load?name={name}` - Load configuration from file
-
-#### Workflow Execution
-- **POST** `/workflow/run?save_intermediate={true/false}` - Run full workflow
-  - Returns summary with cell/gene counts, QC summary, and file paths
-
-### Example API Calls
-
-**Set configuration:**
-curl -X POST "http://127.0.0.1:8000/config" \
-  -H "Content-Type: application/json" \
-  -d @config.json**Run workflow:**
-curl -X POST "http://127.0.0.1:8000/workflow/run?save_intermediate=true"**View API documentation:**
-- Swagger UI: `http://127.0.0.1:8000/docs`
-- ReDoc: `http://127.0.0.1:8000/redoc`
-
-## Troubleshooting
+## 🔧 Troubleshooting
 
 ### Common Issues
 
-#### 1. Module Import Errors
-**Error**: `ModuleNotFoundError: No module named 'app'`
+**Problem**: "Module not found" errors  
+**Solution**: Ensure all dependencies are installed: `pip install -r requirements.txt`
 
-**Solution**: 
-- Ensure you're running from the project root directory
-- Activate your virtual environment
-- Reinstall dependencies: `pip install -r requirements.txt`
+**Problem**: AI chatbot not responding  
+**Solution**: Check that API keys are set correctly in `.env` or Streamlit secrets
 
-#### 2. API Connection Errors
-**Error**: `Connection refused` or `Failed to connect`
+**Problem**: Workflow fails with large datasets  
+**Solution**: Run locally instead of Streamlit Cloud for better memory/compute
 
-**Solution**:
-- Ensure FastAPI backend is running: `uvicorn app.main:app --reload`
-- Check backend URL in Streamlit app matches (default: `http://127.0.0.1:8000`)
-- Verify no firewall is blocking the connection
+---
 
-#### 3. Chatbot Not Initializing
-**Error**: `Chatbot not initialized. Check your API key`
+## ❓ FAQ
 
-**Solution**:
-- Verify `.env` file exists in project root
-- Check API key is correctly set: `OPENAI_API_KEY=your_key`
-- Ensure `DEFAULT_LLM_PROVIDER` is set (e.g., `openai`)
-- Restart Streamlit after changing `.env`
+**Q: Can I run this offline?**  
+A: Yes, but the AI chatbot requires internet access for LLM API calls.
 
-#### 4. Workflow Timeout
-**Error**: Workflow takes too long or times out
+**Q: What input formats are supported?**  
+A: 10x Genomics format (barcodes.tsv, features.tsv, matrix.mtx) and h5ad (AnnData).
 
-**Solution**:
-- Large datasets may take 10+ minutes
-- Increase timeout in `streamlit_app.py` (default: 600 seconds)
-- Consider reducing dataset size for testing
-- Check system resources (RAM, CPU)
+**Q: Can I customize the workflow?**  
+A: Yes! Fork the repo and modify `app/main.py` or the Streamlit pages.
 
-#### 5. Missing Dependencies
-**Error**: `Please install skmisc package` or similar
+---
 
-**Solution**:ash
-pip install scikit-misc python-igraph leidenalg#### 6. File Path Issues (Windows/OneDrive)
-**Error**: `OSError: [Errno 22] Invalid argument`
+## 💾 Project Structure
 
-**Solution**:
-- Move project outside OneDrive sync folder
-- Use shorter directory paths
-- Use `python -m uvicorn` instead of `uvicorn.exe`
-
-#### 7. Streamlit Import Errors
-**Error**: `ImportError: cannot import name 'config_util'`
-
-**Solution**:
-pip uninstall streamlit -y
-pip install streamlit
-
-## FAQ
-
-### General Questions
-
-**Q: What file formats are supported?**
-A: Currently, only `.h5ad` (HDF5 AnnData) format is supported for input data. Metadata can be CSV or TSV.
-
-**Q: Can I use this for bulk RNA-seq?**
-A: The workflow is designed for single-cell RNA-seq. Bulk RNA-seq would require different normalization and analysis methods.
-
-**Q: How do I switch LLM providers?**
-A: Change `DEFAULT_LLM_PROVIDER` in your `.env` file to `openai`, `anthropic`, or `huggingface`, then restart Streamlit.
-
-**Q: Can I run the workflow without the FastAPI backend?**
-A: The Streamlit UI requires the FastAPI backend for workflow execution. However, you can use the API directly without the UI.
-
-### Parameter Questions
-
-**Q: What QC thresholds should I use?**
-A: Start with defaults (min_genes=200, max_mito=0.1, min_umi=500) and adjust based on your data. Use the help sections (📚) for guidance.
-
-**Q: What clustering resolution should I use?**
-A: Start with 0.6. Lower values (0.1-0.4) create fewer, broader clusters. Higher values (0.8-2.0) create more, finer clusters.
-
-**Q: How many principal components should I use?**
-A: Default of 30 works for most datasets. Use more (40-50) for larger or more complex datasets, fewer (20) for simpler datasets.
-
-**Q: Should I enable all analysis options?**
-A: Start with PCA and UMAP. Add t-SNE and differential expression as needed. Pathway enrichment is not yet implemented.
-
-### Technical Questions
-
-**Q: How do I increase memory for large datasets?**
-A: The workflow uses system RAM. For very large datasets, consider:
-- Using a machine with more RAM
-- Reducing dataset size (subset cells/genes)
-- Processing in batches
-
-**Q: Can I customize the workflow?**
-A: Yes, you can modify the workflow functions in `app/workflow/` directory. The code is modular and well-documented.
-
-**Q: How do I add new normalization methods?**
-A: Implement the method in `app/workflow/normalization.py` and add it to the `NormalizationConfig` model in `app/models.py`.
-
-## Project Structure
-
-rna_workflow_app/
+```
+RNA-SeqEasy/
+├── streamlit_app.py          # Main Streamlit application
 ├── app/
-│   ├── __init__.py
-│   ├── main.py                 # FastAPI application
-│   ├── config.py               # Configuration management
-│   ├── models.py               # Pydantic models for validation
-│   ├── workflow/
-│   │   ├── __init__.py
-│   │   ├── qc.py               # Quality control functions
-│   │   ├── normalization.py    # Normalization functions
-│   │   ├── clustering.py       # Clustering functions
-│   │   ├── analysis.py         # Analysis functions (PCA, UMAP, DE, etc.)
-│   │   └── processor.py        # Main workflow orchestrator
-│   └── chatbot/
-│       ├── __init__.py
-│       ├── assistant.py        # Chatbot logic
-│       └── llm_interface.py     # Vendor-agnostic LLM interface
-├── streamlit_app.py            # Streamlit frontend
-├── configs/                    # Generated configuration files
-│   ├── example_basic.yaml
-│   ├── example_strict_qc.yaml
-│   └── example_full_analysis.yaml
-├── outputs/                    # Analysis results
-├── temp_uploads/               # Temporary uploaded files
-├── requirements.txt
-├── .env.example
-├── .gitignore
-└── README.md
+│   ├── main.py              # FastAPI backend
+│   ├── workflow.py          # Scanpy workflow logic
+│   └── utils.py             # Helper functions
+├── pages/
+│   ├── 1_Configure.py       # Configuration page
+│   ├── 2_Run_Workflow.py    # Execution page
+│   ├── 3_Results.py         # Results visualization
+│   └── 4_Help.py            # AI chatbot page
+├── requirements.txt         # Python dependencies
+├── .streamlit/
+│   └── config.toml          # Streamlit configuration
+├── README.md                # This file
+└── LICENSE                  # MIT License
+```
 
-## Requirements
+---
 
-   pip install --upgrade pip
-   pip install -r requirements.txtll dependency list
+## 📦 Requirements
 
-### Key Dependencies
+Key dependencies:
 
-- **FastAPI**: Web framework for API
-- **Streamlit**: Frontend UI framework
-- **Scanpy**: Single-cell analysis toolkit
-- **Pydantic**: Data validation
-- **PyYAML**: YAML file handling
-- **python-dotenv**: Environment variable management
-- **requests**: HTTP client for API calls
+```
+streamlit>=1.28.0
+fastapi>=0.104.0
+scanpy>=1.9.0
+anndata>=0.9.0
+pandas>=1.5.0
+numpy>=1.24.0
+matplotlib>=3.6.0
+seaborn>=0.12.0
+openai>=1.0.0        # Optional: for AI chatbot
+anthropicllm>=0.5.0  # Optional: for AI chatbot
+```
 
-### License
+See `requirements.txt` for full list.
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+---
 
-### Contributing
+## 🤝 Contributing & Feedback
 
-Contributions are welcome! 
+We welcome contributions! Whether you find a bug, have a feature request, or want to improve the documentation:
 
-### Support
+- **Try the app**: https://rnaseqeasy.streamlit.app/
+- **Report issues**: [GitHub Issues](https://github.com/deep-kapadia-6/RNA-SeqEasy/issues)
+- **Submit PRs**: Fork, improve, and submit a pull request
+- **Contact**: Open an issue or reach out via email
 
-For issues, questions, or contributions, please create a GitHub issue. or contact @deep-kapadia-6.
+---
 
+## 📝 License
+
+This project is licensed under the MIT License – see the `LICENSE` file for details.
+
+---
+
+## 📧 Contact
+
+Created by **@deep-kapadia-6**
+
+**Live App**: https://rnaseqeasy.streamlit.app/  
+**Repository**: https://github.com/deep-kapadia-6/RNA-SeqEasy
+
+Built for bioinformatics researchers to streamline single-cell RNA-seq analysis workflows.
